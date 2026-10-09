@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AarogyaMaa – Bridging the gap between hospital and home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* AarogyaMaa – warm, calm, mobile-first */
+:root{--bg:#fbf6ec;--sand:#f1e6d3;--card:#fffaf1;--ink:#3e2a20;--soft:#6d5a4c;--terra:#b5532f;--terra-d:#8f3f22;--olive:#6b7a3d;--line:#e2d3ba;--r:22px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Nunito Sans",system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3,.logo{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2.3rem,7vw,4.2rem);font-weight:700}
+h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+h3{font-size:1.25rem}
+a{color:var(--terra-d)}
+:focus-visible{outline:3px solid var(--olive);outline-offset:2px}
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1.2rem;background:rgba(251,246,236,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-weight:700;font-size:1.4rem;color:var(--terra);text-decoration:none}
+.burger{background:none;border:0;font-size:1.6rem;color:var(--ink);cursor:pointer;min-width:44px;min-height:44px}
+#menu{display:none;flex-direction:column;width:100%;gap:.4rem;padding:.6rem 0}
+#menu.open{display:flex}
+#menu a{text-decoration:none;color:var(--ink);padding:.45rem .2rem;font-weight:600}
+#menu a.active{color:var(--terra);box-shadow:inset 0 -3px var(--terra)}
+select,input,textarea{font:inherit;color:inherit}
+input,select{width:100%;padding:.6rem .8rem;border:1.5px solid var(--line);border-radius:14px;background:#fff}
+label{display:block;font-weight:600;font-size:.92rem}
+label input,label select{margin-top:.25rem;font-weight:400}
+.btn{display:inline-block;background:var(--terra);color:#fff!important;border:0;border-radius:999px;padding:.7rem 1.4rem;font:700 1rem "Nunito Sans",sans-serif;cursor:pointer;text-decoration:none;min-height:44px;transition:background .2s}
+.btn:hover{background:var(--terra-d)}
+.btn.ghost{background:transparent;color:var(--terra-d)!important;border:2px solid var(--terra)}
+#menu select{width:auto}
+.hero{display:grid;gap:2rem;padding:3rem 1.2rem;max-width:1100px;margin:auto;align-items:center}
+.hero svg{width:100%;max-width:340px;justify-self:center}
+.hero p{max-width:34em}
+.wrap{max-width:1100px;margin:auto;padding:3rem 1.2rem}
+.small,.note{font-size:.88rem;color:var(--soft)}
+.note{background:var(--sand);border-left:4px solid var(--olive);padding:.6rem .9rem;border-radius:0 12px 12px 0}
+.lead{color:var(--soft);max-width:40em}
+.pill{display:inline-block;background:var(--sand);padding:.3rem .9rem;border-radius:999px;font-weight:700;font-size:.92rem}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.two{display:grid;gap:1.2rem;margin:1.2rem 0}
+.card,.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r) 8px var(--r) 8px;padding:1.2rem;box-shadow:0 6px 18px rgba(90,60,30,.07)}
+.grid>.card{border-radius:var(--r)}
+button.tile{text-align:left;font:inherit;color:inherit;cursor:pointer;transition:transform .2s,border-color .2s;width:100%}
+button.tile:hover{transform:translateY(-3px);border-color:var(--terra)}
+.quick{display:grid;gap:.8rem;grid-template-columns:repeat(2,1fr);padding-top:0}
+.quick .tile{font-weight:700;font-family:Fraunces,serif;text-align:center;padding:1.1rem .6rem}
+.quick span{display:block;font-size:1.6rem}
+.timeline{list-style:none;padding:0;margin:1rem 0;border-left:3px solid var(--line);margin-left:.6rem}
+.timeline li{position:relative;padding:0 0 1.4rem 1.6rem}
+.timeline li::before{content:"";position:absolute;left:-11px;top:.35rem;width:19px;height:19px;border-radius:50%;background:var(--bg);border:3px solid var(--terra)}
+.timeline li.done::before{background:var(--olive);border-color:var(--olive)}
+.timeline li.done h3{text-decoration:line-through;text-decoration-color:var(--olive)}
+.timeline p{margin:.2rem 0 .5rem;color:var(--soft)}
+.bar{height:12px;background:var(--sand);border-radius:99px;overflow:hidden;margin-bottom:.6rem}
+.bar i{display:block;height:100%;width:0;background:var(--olive);transition:width .4s}
+.checks,.items{list-style:none;padding:0;margin:1rem 0}
+.checks li{padding:.35rem 0;display:flex;gap:.6rem;align-items:center}
+.checks input{width:22px;height:22px;accent-color:var(--olive)}
+.checks button,.items button{background:none;border:0;color:var(--terra-d);cursor:pointer;font:inherit;text-decoration:underline;min-height:36px}
+.checks .grow-s{flex:1}
+.row{display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end}
+.grow{flex:1;min-width:180px}
+.fields{display:grid;gap:.8rem;margin-bottom:.8rem}
+form>label,form>fieldset{margin-bottom:.8rem}
+fieldset{border:0;padding:0;margin:0}
+legend{font-weight:600;font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 1rem}
+.chips label,.chips button{display:inline-flex;align-items:center;gap:.3rem;background:var(--sand);border:1.5px solid transparent;border-radius:999px;padding:.35rem .9rem;cursor:pointer;font:600 .9rem "Nunito Sans",sans-serif;color:var(--ink)}
+.chips input{width:auto;margin:0;accent-color:var(--terra)}
+.chips button.on{background:var(--olive);color:#fff}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:.8rem 0}
+.cal b{aspect-ratio:1;display:grid;place-items:center;background:var(--sand);border-radius:10px;font-size:.8rem;font-weight:600}
+.cal b.p{background:var(--terra);color:#fff}.cal b.t{outline:3px solid var(--olive)}
+.items li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:.8rem 1rem;margin-bottom:.6rem}
+.items li.done .t{text-decoration:line-through;opacity:.6}
+.items .m{font-size:.85rem;color:var(--soft)}
+.items .tag{background:var(--sand);border-radius:99px;padding:0 .6rem;font-size:.78rem;font-weight:700}
+.warn{background:var(--sand);max-width:none}
+.warn>*{max-width:1100px;margin-left:auto;margin-right:auto}
+.warn li{margin:.4rem 0}
+.big{font:700 1.3rem Fraunces,serif;text-align:center;margin:1.5rem auto}
+.sos{display:block;margin:auto;background:var(--terra-d)}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:.9rem 1.1rem;margin-bottom:.6rem}
+summary{font-weight:700;cursor:pointer}
+footer{background:#3e2a20;color:#f1e6d3;padding:2.5rem 1.2rem;text-align:center}
+footer a{color:#f1e6d3}
+dialog{border:0;border-radius:var(--r);max-width:560px;width:calc(100% - 2rem);background:var(--card);color:var(--ink);padding:1.6rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(62,42,32,.5)}
+#mclose{float:right;background:none;border:0;font-size:1.3rem;cursor:pointer;min-width:44px;min-height:44px}
+#toast{position:fixed;bottom:1.2rem;left:50%;transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:.7rem 1.3rem;border-radius:99px;transition:transform .3s;z-index:50}
+#toast.show{transform:translate(-50%,0)}
+@media(min-width:760px){.hero{grid-template-columns:1.2fr 1fr}.two{grid-template-columns:1fr 1fr}.quick{grid-template-columns:repeat(6,1fr)}.fields{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.burger{display:none}#menu{display:flex;flex-direction:row;width:auto;align-items:center;padding:0;gap:1rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <a class="logo" href="#home">AarogyaMaa</a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">☰</button>
+  <nav id="menu" aria-label="Main">
+    <a href="#home">Home</a><a href="#mother">Mother Care</a><a href="#baby">Baby Care</a><a href="#health">My Health</a><a href="#reminders">Reminders</a><a href="#hub">Knowledge Hub</a><a href="#warning">Warning Signs</a>
+    <select id="lang" aria-label="Language"><option value="en">English</option><option value="hi">हिंदी</option><option value="mr">मराठी</option></select>
+    <a class="btn" href="#journey">My Care Journey</a>
+  </nav>
+</header>
+<main>
+<section id="home" class="hero">
+  <div>
+    <h1>Bridging the gap between hospital and home.</h1>
+    <p>Gentle guidance, everyday support, and practical care resources for mothers and newborns as they begin their journey at home.</p>
+    <p><a class="btn" href="#journey">Start My Care Journey</a> <a class="btn ghost" href="#mother">Explore Care Guide</a></p>
+    <p class="small">Designed to support—not replace—professional medical care.</p>
+    <p id="hello" class="small"></p>
+  </div>
+  <svg viewBox="0 0 300 300" role="img" aria-label="Illustration of a mother holding her newborn"><circle cx="150" cy="150" r="140" fill="#eadcc4"/><path d="M60 290c0-70 40-110 90-110s90 40 90 110z" fill="#b5532f"/><circle cx="150" cy="115" r="38" fill="#e2b48c"/><path d="M110 112c0-40 80-40 80 0 0-22-20-34-40-34s-40 12-40 34z" fill="#4a2f22"/><ellipse cx="150" cy="215" rx="42" ry="26" fill="#f4ead6"/><circle cx="150" cy="200" r="16" fill="#e8bf9a"/><circle cx="35" cy="60" r="18" fill="#8a9a5b" opacity=".6"/><circle cx="270" cy="250" r="24" fill="#8a9a5b" opacity=".5"/></svg>
+</section>
+
+<section class="wrap quick" id="quick" aria-label="Quick actions"></section>
+
+<section class="wrap" id="journey"><h2>My Care Journey</h2><p id="jprog" class="pill"></p><ol class="timeline" id="jlist"></ol></section>
+
+<section class="wrap" id="mother"><h2>Mother Care</h2><p class="lead">Educational guidance for your recovery. Tap a card to read more.</p><div class="grid" id="mgrid"></div></section>
+<section class="wrap" id="baby"><h2>Baby Care</h2><p class="lead">Simple newborn basics, with do &amp; remember tips.</p><div class="grid" id="bgrid"></div></section>
+
+<section class="wrap" id="checklist"><h2>Today's Checklist</h2>
+  <div class="card"><div class="bar"><i id="cbar"></i></div><p id="cpct" class="pill"></p><ul class="checks" id="clist"></ul>
+  <form id="cform" class="row"><label class="grow">Custom task<input name="t" required maxlength="60"></label><button class="btn">Add task</button><button type="button" class="btn ghost" id="creset">Reset today</button></form></div></section>
+
+<section class="wrap" id="health"><h2>My Health</h2><p class="note">Personal tracking only. Estimates are estimates, not medical facts, and nothing here diagnoses a condition.</p>
+  <div class="two">
+    <div class="card"><h3>Period tracker</h3>
+      <form id="pform" class="fields"><label>Last period start<input type="date" name="last" required></label><label>Cycle length (days)<input type="number" name="cycle" min="20" max="45" value="28" required></label><label>Period duration (days)<input type="number" name="dur" min="1" max="10" value="5" required></label><button class="btn">Save &amp; calculate</button></form>
+      <p id="pout" class="pill">Enter your dates to see an estimate.</p><div class="cal" id="cal" aria-label="Cycle calendar"></div><p class="small">Terracotta = estimated period days. Olive = today.</p></div>
+    <div class="card"><h3>Symptom tracker</h3>
+      <form id="sform"><label>Date<input type="date" name="date" required></label><fieldset><legend>Symptoms</legend><div class="chips" id="schips"></div></fieldset><label>Flow<select name="flow"><option>None</option><option>Light</option><option>Medium</option><option>Heavy</option></select></label><label>Note (optional)<input name="note" maxlength="80"></label><button class="btn">Save entry</button></form><ul class="items" id="slist"></ul></div>
+  </div>
+  <div class="card"><h3>Postpartum check-in</h3><form id="qform"><div class="fields" id="qfields"></div><button class="btn">Save today's check-in</button></form><p id="qlast" class="small"></p><p class="note">This check-in is for personal tracking and does not diagnose medical conditions.</p></div>
+</section>
+
+<section class="wrap" id="reminders"><h2>Reminders</h2>
+  <div class="two"><div class="card"><h3>Add a reminder</h3><form id="rform" class="fields"><label>Title<input name="title" required maxlength="60"></label><label>Date<input type="date" name="date" required></label><label>Time<input type="time" name="time"></label><label>Category<select name="cat"><option>Medication</option><option>Doctor Visit</option><option>Vaccination</option><option>Feeding</option><option>Self-care</option><option>Other</option></select></label><label>Notes<input name="notes" maxlength="80"></label><button class="btn">Save reminder</button></form><p class="small">Reminders appear here when you open the site; they don't send alerts.</p></div>
+  <div><ul class="items" id="rlist"></ul></div></div>
+  <div class="two"><div class="card"><h3>Vaccination &amp; follow-up</h3><form id="vform" class="fields"><label>Vaccine / follow-up<input name="title" required maxlength="60"></label><label>Date<input type="date" name="date" required></label><label>Status<select name="status"><option>Upcoming</option><option>Completed</option></select></label><label>Notes<input name="notes" maxlength="80"></label><button class="btn">Save record</button></form><p class="note">Confirm vaccination schedules with a qualified healthcare professional and local immunization guidance.</p></div>
+  <div><ul class="items" id="vlist"></ul></div></div>
+</section>
+
+<section class="wrap" id="hub"><h2>Knowledge Hub</h2><div class="row"><label class="grow">Search<input id="q" type="search" placeholder="Try “sleep” or “iron”"></label></div><div class="chips" id="cats"></div><div class="grid" id="agrid"></div></section>
+
+<section class="wrap warn" id="warning"><h2>Warning Signs</h2><p class="lead">Most days are ordinary. These are the moments to reach out for help early.</p>
+  <div class="two"><div class="card"><h3>Mother — when to seek medical help</h3><ul id="wm"></ul></div><div class="card"><h3>Newborn — when to seek medical help</h3><ul id="wb"></ul></div></div>
+  <p class="big">If you are worried about your health or your baby’s health, contact a qualified healthcare professional.</p>
+  <button class="btn sos" id="sos">Seek Emergency Medical Help</button></section>
+
+<section class="wrap" id="support"><h2>Support Around You</h2><p class="lead">Recovery is easier when it isn't done alone. Family and caregivers can help by:</p>
+  <div class="grid"><div class="card"><h3>Meals</h3><p>Cook simple, nourishing food and keep water within reach.</p></div><div class="card"><h3>Rest</h3><p>Protect naps. Take the baby for a stretch so she can sleep.</p></div><div class="card"><h3>Baby care</h3><p>Handle diapers, burping and settling between feeds.</p></div><div class="card"><h3>Household</h3><p>Laundry, dishes and visitors are theirs to manage.</p></div><div class="card"><h3>Appointments</h3><p>Keep track of visits and vaccinations, and go along.</p></div><div class="card"><h3>Emotional support</h3><p>Listen without fixing. Notice if low mood lingers and encourage help.</p></div></div></section>
+
+<section class="wrap" id="profile"><h2>Profile</h2><div class="card"><form id="fform" class="fields"><label>Preferred name<input name="name" maxlength="30"></label><label>Care stage<select name="stage"><option>Just discharged</option><option>First weeks</option><option>Follow-up stage</option><option>Ongoing</option></select></label><label>Baby nickname<input name="baby" maxlength="30"></label><button class="btn">Save preferences</button></form>
+  <p class="small"><strong>Privacy:</strong> AarogyaMaa is a frontend prototype. Information entered into trackers and preferences is stored locally in this browser. Avoid entering highly sensitive medical or personal information.</p><button class="btn ghost" id="wipe">Delete My Data</button></div></section>
+
+<section class="wrap" id="faq"><h2>FAQ</h2><div id="faqs"></div></section>
+</main>
+<footer><strong>AarogyaMaa</strong><p>Bridging the gap between hospital and home.</p><p><a href="#privacy" onclick="return false">Privacy: stored only in this browser</a> · <a href="#profile">Delete My Data</a></p><p class="small">AarogyaMaa provides general educational and organizational support. It does not diagnose, treat, or replace advice from qualified healthcare professionals. For urgent concerns, seek appropriate medical care.</p><p class="small">© 2026 AarogyaMaa</p></footer>
+<dialog id="modal"><button id="mclose" aria-label="Close">✕</button><div id="mbody"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+/* AarogyaMaa – vanilla JS. All data stays in this browser's localStorage. */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const P = 'aarogyamaa:';
+const get = (k, d) => { try { return JSON.parse(localStorage.getItem(P + k)) ?? d; } catch { return d; } };
+const set = (k, v) => { try { localStorage.setItem(P + k, JSON.stringify(v)); } catch { toast('Could not save in this browser.'); } };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const today = () => new Date().toISOString().slice(0, 10);
+let tt; function toast(m) { const el = $('#toast'); el.textContent = t(m); el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 2400); }
+function modal(html) { $('#mbody').innerHTML = html; $('#modal').showModal(); }
+$('#mclose').onclick = () => $('#modal').close();
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') e.target.close(); });
+
+/* ---------- Content ---------- */
+const care = {
+  mother: [
+    ['Postpartum recovery', 'Recovery takes weeks, and every body heals at its own pace.', ['Rest whenever the baby sleeps', 'Keep hygiene gentle and follow your discharge advice', 'Move slowly; ask for help lifting and carrying', 'Share how you feel with someone you trust']],
+    ['Nutrition', 'Regular, varied meals help you heal and support feeding.', ['Include protein, vegetables, fruit and whole grains', 'Iron-rich foods such as lentils, greens and jaggery may help; ask your clinician about supplements', 'Sip water through the day', 'Keep easy snacks near your feeding spot']],
+    ['Rest & self-care', 'Small routines protect your energy.', ['Accept help with chores', 'Take short breaks, even ten minutes', 'Keep a calm wind-down before sleep', 'Say yes when visitors offer to cook']],
+    ['Breastfeeding support', 'Feeding is a skill learned by both of you.', ['Newborns often feed many times a day; follow hunger cues', 'Try comfortable positions with back and arm support', 'Stay hydrated and eat regularly', 'Ask a lactation professional or doctor if feeding hurts or worries you']]],
+  baby: [
+    ['Feeding', 'Newborns feed often. Watch for cues like rooting and hand-to-mouth.', ['Feed on cues, not only by the clock', 'Burp gently after feeds', 'Note wet and dirty diapers and share concerns with your pediatrician']],
+    ['Sleep', 'Newborn sleep is short and irregular, and that is normal.', ['Follow day and night cues: light and noise by day, calm at night', 'Sleep when baby sleeps', 'Swaddle only as your clinician advises']],
+    ['Diaper & hygiene', 'Frequent changes keep skin comfortable.', ['Wash hands before handling baby', 'Clean gently front to back', 'Change diapers soon after they are wet or soiled']],
+    ['Cord care', 'The cord stump dries and falls off on its own.', ['Keep it clean and dry as your clinician advised', 'Fold diapers below the stump', 'Do not pull it off']],
+    ['Bathing', 'Sponge baths are common until the cord heals.', ['Keep the room warm', 'Never leave baby alone in water', 'Test water temperature with your wrist']],
+    ['Skin care', 'Newborn skin is delicate.', ['Use mild, fragrance-free products', 'Dress baby in soft, breathable clothes', 'Ask your doctor about rashes rather than guessing']],
+    ['Safe sleep', 'A safe sleep space lowers risks.', ['Place baby on the back on a firm, flat surface', 'Keep the sleep space free of pillows, loose blankets and toys', 'Avoid overheating']],
+    ['Vaccination & follow-up', 'Timely visits let professionals check growth and protect health.', ['Keep the vaccination card safe', 'Confirm the schedule with your pediatrician and local guidance', 'Record dates in the tracker below']]]
+};
+const stages = [
+  ['Hospital discharge', 'Gather discharge papers and medicine instructions; ask questions before leaving.'],
+  ['First days at home', 'Set up a rest corner, keep water and snacks close, and accept help.'],
+  ["Mother's recovery", 'Rest, eat regularly, and note how you feel each day.'],
+  ['Newborn care', 'Learn baby’s feeding and sleep rhythm, and keep safe sleep habits.'],
+  ['Follow-up', 'Attend check-ups and vaccinations for you and baby.'],
+  ['Ongoing well-being', 'Keep asking for support and care for your emotional health.']];
+const arts = [
+  ['Mother Care', 'Easing into your first week', 'Plan simple days: one meal, one rest, one small task. Keep discharge notes where family can find them.'],
+  ['Nutrition', 'Eating well while recovering', 'Regular meals with protein, vegetables, fruit and grains can help energy. Ask your clinician about iron or vitamin supplements.'],
+  ['Breastfeeding', 'Finding a comfortable position', 'Support your back and arms, bring baby to the breast, and check that baby’s body faces you. Seek professional help for pain or worries.'],
+  ['Newborn Care', 'Understanding newborn sleep', 'Newborns wake often to feed. Sleep patterns mature over months, so short stretches are expected.'],
+  ['Recovery', 'Gentle movement after birth', 'Short, slow walks may suit many mothers, but ask your care team when it’s right for you.'],
+  ['Hygiene', 'Hand-washing and clean routines', 'Wash hands before feeding and diaper changes. Keep feeding items clean.'],
+  ['Mental Well-being', 'Baby blues and asking for help', 'Mood swings are common early on. If sadness or worry lasts, or feels heavy, talk to a healthcare professional soon.'],
+  ['Follow-up Care', 'Preparing for check-ups', 'Write questions down, bring the vaccination card, and note feeding and diaper patterns.']];
+const wm = ['Heavy bleeding or soaking pads quickly', 'Difficulty breathing or severe chest pain', 'Fainting, seizure, or severe headache with vision changes', 'High fever, chills, or foul-smelling discharge', 'Worsening pain, swelling or redness of a wound or leg', 'Thoughts of harming yourself or feeling unable to cope'];
+const wb = ['Difficulty breathing or bluish colour', 'Very hard to wake or unusually limp', 'Not feeding well or refusing feeds', 'Fever or unusually low temperature', 'Yellowing that is spreading or deepening', 'Repeated vomiting, or very few wet diapers'];
+const faqs = [
+  ['What is AarogyaMaa?', 'A calm companion for organizing care and learning after hospital discharge.'],
+  ['Does AarogyaMaa replace a doctor?', 'No. It offers general education and organization, not diagnosis or treatment.'],
+  ['Is my information stored?', 'Only in this browser, through localStorage. Nothing is sent anywhere.'],
+  ['Can I use the period tracker?', 'Yes. It gives estimates only and is not medically certain.'],
+  ['Can I track newborn care?', 'Yes, with the checklist, reminders and vaccination tracker.'],
+  ['How do reminders work?', 'You add them and see them here. They do not send alerts.'],
+  ['Can I delete my data?', 'Yes, use Delete My Data in Profile.'],
+  ['When should I contact a healthcare professional?', 'Any time you are worried. See Warning Signs for examples.']];
+const D = {
+'Home':['होम','मुख्यपृष्ठ'],'Mother Care':['माँ की देखभाल','आईची काळजी'],'Baby Care':['शिशु की देखभाल','बाळाची काळजी'],'My Health':['मेरा स्वास्थ्य','माझे आरोग्य'],'Reminders':['रिमाइंडर','स्मरणपत्रे'],'Knowledge Hub':['ज्ञान केंद्र','ज्ञान केंद्र'],'Warning Signs':['चेतावनी के संकेत','धोक्याची चिन्हे'],'My Care Journey':['मेरी देखभाल यात्रा','माझा काळजी प्रवास'],
+'Bridging the gap between hospital and home.':['अस्पताल और घर के बीच का सेतु।','रुग्णालय आणि घर यांच्यातील सेतू.'],
+'Gentle guidance, everyday support, and practical care resources for mothers and newborns as they begin their journey at home.':['घर पर यात्रा शुरू करने वाली माँओं और नवजात शिशुओं के लिए सौम्य मार्गदर्शन, रोज़मर्रा की मदद और व्यावहारिक देखभाल जानकारी।','घरी प्रवास सुरू करणाऱ्या माता आणि नवजात बाळांसाठी सौम्य मार्गदर्शन, रोजची मदत आणि व्यावहारिक काळजीची माहिती.'],
+'Start My Care Journey':['मेरी देखभाल यात्रा शुरू करें','माझा काळजी प्रवास सुरू करा'],'Explore Care Guide':['देखभाल गाइड देखें','काळजी मार्गदर्शक पहा'],
+'Designed to support—not replace—professional medical care.':['पेशेवर चिकित्सा देखभाल का विकल्प नहीं, केवल सहयोग के लिए बनाया गया।','व्यावसायिक वैद्यकीय काळजीला पर्याय नाही, केवळ पूरक आधारासाठी तयार केले.'],
+"Today's Checklist":['आज की चेकलिस्ट','आजची चेकलिस्ट'],'Warning Signs':['चेतावनी के संकेत','धोक्याची चिन्हे'],
+'Educational guidance for your recovery. Tap a card to read more.':['आपके स्वास्थ्य-लाभ के लिए शैक्षिक मार्गदर्शन। अधिक पढ़ने के लिए कार्ड दबाएँ।','तुमच्या बरे होण्यासाठी शैक्षणिक मार्गदर्शन. अधिक वाचण्यासाठी कार्डवर टॅप करा.'],
+'Simple newborn basics, with do & remember tips.':['नवजात शिशु की सरल बुनियादी बातें, और क्या करें/याद रखें के सुझाव।','नवजात बाळाच्या सोप्या मूलभूत गोष्टी आणि काय करावे/लक्षात ठेवावे याच्या टिप्स.'],
+'Custom task':['अपना कार्य','स्वतःचे काम'],'Add task':['कार्य जोड़ें','काम जोडा'],'Reset today':['आज रीसेट करें','आज रीसेट करा'],
+'Personal tracking only. Estimates are estimates, not medical facts, and nothing here diagnoses a condition.':['केवल व्यक्तिगत ट्रैकिंग। अनुमान केवल अनुमान हैं, चिकित्सीय तथ्य नहीं, और यहाँ कुछ भी रोग का निदान नहीं करता।','केवळ वैयक्तिक नोंदीसाठी. अंदाज हे केवळ अंदाज आहेत, वैद्यकीय तथ्य नाहीत, आणि येथे कशाचेही निदान होत नाही.'],
+'Period tracker':['पीरियड ट्रैकर','मासिक पाळी ट्रॅकर'],'Last period start':['पिछले पीरियड की शुरुआत','मागील पाळीची सुरुवात'],'Cycle length (days)':['चक्र की अवधि (दिन)','चक्राची लांबी (दिवस)'],'Period duration (days)':['पीरियड की अवधि (दिन)','पाळीचा कालावधी (दिवस)'],'Save & calculate':['सहेजें और गणना करें','जतन करा आणि गणना करा'],
+'Enter your dates to see an estimate.':['अनुमान देखने के लिए अपनी तारीखें दर्ज करें।','अंदाज पाहण्यासाठी तुमच्या तारखा भरा.'],
+'Terracotta = estimated period days. Olive = today.':['टेराकोटा = अनुमानित पीरियड के दिन। जैतून-हरा = आज।','टेराकोटा = अंदाजे पाळीचे दिवस. ऑलिव्ह हिरवा = आज.'],
+'The last-period date is in the future. Please check it.':['पिछले पीरियड की तारीख भविष्य में है। कृपया जाँचें।','मागील पाळीची तारीख भविष्यातील आहे. कृपया तपासा.'],
+'Estimated: cycle day {c} · next period around {d}. Cycles vary, so treat this as an estimate.':['अनुमान: चक्र का दिन {c} · अगला पीरियड लगभग {d}। चक्र अलग-अलग होते हैं, इसे केवल अनुमान मानें।','अंदाज: चक्राचा दिवस {c} · पुढील पाळी साधारण {d}. चक्र वेगवेगळे असतात, हा फक्त अंदाज समजा.'],
+'Symptom tracker':['लक्षण ट्रैकर','लक्षण ट्रॅकर'],'Date':['तारीख','तारीख'],'Symptoms':['लक्षण','लक्षणे'],'Flow':['रक्तस्राव','रक्तस्राव'],'None':['कोई नहीं','काही नाही'],'Light':['हल्का','हलका'],'Medium':['मध्यम','मध्यम'],'Heavy':['अधिक','जास्त'],'Note (optional)':['नोट (वैकल्पिक)','नोंद (ऐच्छिक)'],'Save entry':['प्रविष्टि सहेजें','नोंद जतन करा'],
+'Cramps':['ऐंठन','पोटात कळा'],'Headache':['सिरदर्द','डोकेदुखी'],'Back pain':['पीठ दर्द','पाठदुखी'],'Fatigue':['थकान','थकवा'],'Mood changes':['मनोदशा में बदलाव','मूडमध्ये बदल'],'Bloating':['पेट फूलना','पोट फुगणे'],'Breast tenderness':['स्तनों में कोमलता/दर्द','स्तनांमध्ये वेदना'],'Nausea':['मितली','मळमळ'],'No symptoms selected':['कोई लक्षण नहीं चुना','लक्षणे निवडली नाहीत'],
+'Postpartum check-in':['प्रसवोत्तर चेक-इन','प्रसूतीनंतरचे चेक-इन'],'Energy':['ऊर्जा','ऊर्जा'],'Rest':['आराम','विश्रांती'],'Appetite':['भूख','भूक'],'Hydration':['पानी की मात्रा','पाणी पिणे'],'General comfort':['सामान्य आराम','एकूण आराम'],'Emotional well-being':['भावनात्मक स्वास्थ्य','भावनिक स्वास्थ्य'],'Low':['कम','कमी'],'Okay':['ठीक','ठीक'],'Good':['अच्छा','चांगले'],
+"Save today's check-in":['आज का चेक-इन सहेजें','आजचे चेक-इन जतन करा'],'This check-in is for personal tracking and does not diagnose medical conditions.':['यह चेक-इन व्यक्तिगत ट्रैकिंग के लिए है और किसी रोग का निदान नहीं करता।','हे चेक-इन वैयक्तिक नोंदीसाठी आहे आणि कोणत्याही आजाराचे निदान करत नाही.'],
+'Check-in saved':['चेक-इन सहेजा गया','चेक-इन जतन केले'],'Last check-in {d}: ':['आखिरी चेक-इन {d}: ','शेवटचे चेक-इन {d}: '],
+'. Low answers for a few days are worth mentioning to your care team.':['। कई दिन "कम" उत्तर हों तो अपनी देखभाल टीम को बताएँ।','. काही दिवस "कमी" उत्तरे असल्यास तुमच्या काळजी टीमला सांगा.'],
+'Add a reminder':['रिमाइंडर जोड़ें','स्मरणपत्र जोडा'],'Title':['शीर्षक','शीर्षक'],'Time':['समय','वेळ'],'Category':['श्रेणी','प्रकार'],'Medication':['दवा','औषध'],'Doctor Visit':['डॉक्टर से मिलना','डॉक्टरांची भेट'],'Vaccination':['टीकाकरण','लसीकरण'],'Feeding':['आहार','आहार'],'Self-care':['स्वयं की देखभाल','स्वतःची काळजी'],'Other':['अन्य','इतर'],'Notes':['नोट्स','नोंदी'],'Save reminder':['रिमाइंडर सहेजें','स्मरणपत्र जतन करा'],
+"Reminders appear here when you open the site; they don't send alerts.":['साइट खोलने पर रिमाइंडर यहाँ दिखते हैं; वे अलर्ट नहीं भेजते।','साइट उघडल्यावर स्मरणपत्रे येथे दिसतात; ती सूचना पाठवत नाहीत.'],
+'Vaccination & follow-up':['टीकाकरण और फॉलो-अप','लसीकरण आणि पाठपुरावा'],'Vaccine / follow-up':['टीका / फॉलो-अप','लस / पाठपुरावा'],'Status':['स्थिति','स्थिती'],'Upcoming':['आगामी','आगामी'],'Completed':['पूर्ण','पूर्ण'],'Save record':['रिकॉर्ड सहेजें','नोंद जतन करा'],
+'Confirm vaccination schedules with a qualified healthcare professional and local immunization guidance.':['टीकाकरण की समय-सारणी किसी योग्य स्वास्थ्य पेशेवर और स्थानीय टीकाकरण दिशानिर्देशों से पुष्ट कर लें।','लसीकरणाचे वेळापत्रक पात्र आरोग्य तज्ज्ञ आणि स्थानिक लसीकरण मार्गदर्शक सूचनांनुसार तपासून घ्या.'],
+'Search':['खोजें','शोधा'],'Try “sleep” or “iron”':['“नींद” या “आयरन” आज़माएँ','“झोप” किंवा “लोह” वापरून पहा'],'All':['सभी','सर्व'],'Newborn Care':['नवजात देखभाल','नवजात बाळाची काळजी'],'Nutrition':['पोषण','पोषण'],'Breastfeeding':['स्तनपान','स्तनपान'],'Recovery':['स्वास्थ्य-लाभ','बरे होणे'],'Hygiene':['स्वच्छता','स्वच्छता'],'Mental Well-being':['मानसिक स्वास्थ्य','मानसिक स्वास्थ्य'],'Follow-up Care':['फॉलो-अप देखभाल','पाठपुरावा काळजी'],
+'Read more':['और पढ़ें','अधिक वाचा'],'General education, not medical advice.':['सामान्य जानकारी, चिकित्सीय सलाह नहीं।','सामान्य माहिती, वैद्यकीय सल्ला नाही.'],'No articles match. Try another word or choose All.':['कोई लेख नहीं मिला। दूसरा शब्द आज़माएँ या सभी चुनें।','एकही लेख जुळला नाही. दुसरा शब्द वापरा किंवा सर्व निवडा.'],
+'Most days are ordinary. These are the moments to reach out for help early.':['ज़्यादातर दिन सामान्य होते हैं। ये वे संकेत हैं जब जल्दी मदद लेनी चाहिए।','बहुतेक दिवस सामान्य असतात. ही अशी वेळ आहे जेव्हा लवकर मदत घ्यावी.'],
+'Mother — when to seek medical help':['माँ — चिकित्सा सहायता कब लें','आई — वैद्यकीय मदत केव्हा घ्यावी'],'Newborn — when to seek medical help':['नवजात — चिकित्सा सहायता कब लें','नवजात बाळ — वैद्यकीय मदत केव्हा घ्यावी'],
+'Heavy bleeding or soaking pads quickly':['भारी रक्तस्राव या पैड का जल्दी भीग जाना','जास्त रक्तस्राव किंवा पॅड लवकर भिजणे'],'Difficulty breathing or severe chest pain':['सांस लेने में कठिनाई या सीने में तेज़ दर्द','श्वास घेण्यास त्रास किंवा छातीत तीव्र वेदना'],'Fainting, seizure, or severe headache with vision changes':['बेहोशी, दौरा, या दृष्टि में बदलाव के साथ तेज़ सिरदर्द','बेशुद्ध होणे, झटके येणे, किंवा दृष्टीत बदलासह तीव्र डोकेदुखी'],'High fever, chills, or foul-smelling discharge':['तेज़ बुखार, कंपकंपी, या बदबूदार स्राव','तीव्र ताप, थंडी वाजणे, किंवा दुर्गंधीयुक्त स्राव'],'Worsening pain, swelling or redness of a wound or leg':['घाव या पैर में बढ़ता दर्द, सूजन या लालिमा','जखम किंवा पायात वाढती वेदना, सूज किंवा लालसरपणा'],'Thoughts of harming yourself or feeling unable to cope':['खुद को नुकसान पहुँचाने के विचार या सँभाल न पाने का एहसास','स्वतःला इजा करण्याचे विचार किंवा सहन न होत असल्याची भावना'],
+'Difficulty breathing or bluish colour':['सांस लेने में कठिनाई या नीला रंग','श्वास घेण्यास त्रास किंवा निळसर रंग'],'Very hard to wake or unusually limp':['जगाना बहुत कठिन या असामान्य रूप से ढीला','उठवणे खूप कठीण किंवा असामान्यपणे शिथिल'],'Not feeding well or refusing feeds':['ठीक से दूध न पीना या दूध लेने से मना करना','नीट दूध न पिणे किंवा दूध नाकारणे'],'Fever or unusually low temperature':['बुखार या असामान्य रूप से कम तापमान','ताप किंवा असामान्यपणे कमी तापमान'],'Yellowing that is spreading or deepening':['फैलता या गहराता पीलापन','पसरणारा किंवा वाढणारा पिवळेपणा'],'Repeated vomiting, or very few wet diapers':['बार-बार उल्टी, या बहुत कम गीले डायपर','वारंवार उलट्या, किंवा खूप कमी ओले डायपर'],
+'If you are worried about your health or your baby’s health, contact a qualified healthcare professional.':['यदि आपको अपने या शिशु के स्वास्थ्य की चिंता है, तो किसी योग्य स्वास्थ्य पेशेवर से संपर्क करें।','तुम्हाला तुमच्या किंवा बाळाच्या आरोग्याची काळजी वाटत असल्यास, पात्र आरोग्य तज्ज्ञांशी संपर्क साधा.'],
+'Seek Emergency Medical Help':['आपातकालीन चिकित्सा सहायता लें','तातडीची वैद्यकीय मदत घ्या'],'Get help now':['अभी मदद लें','आत्ताच मदत घ्या'],
+'Call your local emergency number or go to the nearest hospital. Stay with the person, and ask someone nearby to help.':['अपने क्षेत्र का आपातकालीन नंबर मिलाएँ या नज़दीकी अस्पताल जाएँ। व्यक्ति के साथ रहें और पास के किसी व्यक्ति से मदद माँगें।','तुमच्या भागातील आपत्कालीन क्रमांकावर कॉल करा किंवा जवळच्या रुग्णालयात जा. त्या व्यक्तीजवळ थांबा आणि जवळच्या कोणाला मदतीस सांगा.'],
+'AarogyaMaa cannot assess emergencies. Emergency numbers differ by country, so use the one for your area.':['AarogyaMaa आपात स्थिति का आकलन नहीं कर सकता। आपातकालीन नंबर देश के अनुसार अलग होते हैं, अपने क्षेत्र का नंबर प्रयोग करें।','AarogyaMaa आपत्कालीन स्थितीचे मूल्यमापन करू शकत नाही. आपत्कालीन क्रमांक देशानुसार वेगळे असतात, तुमच्या भागातील क्रमांक वापरा.'],
+'Support Around You':['आपके आसपास का सहारा','तुमच्या भोवतीचा आधार'],"Recovery is easier when it isn't done alone. Family and caregivers can help by:":['साथ मिलकर स्वास्थ्य-लाभ आसान होता है। परिवार और देखभालकर्ता इस तरह मदद कर सकते हैं:','साथीने बरे होणे सोपे जाते. कुटुंबीय आणि काळजीवाहक अशी मदत करू शकतात:'],
+'Meals':['भोजन','जेवण'],'Baby care':['शिशु देखभाल','बाळाची काळजी'],'Household':['घर के काम','घरकाम'],'Appointments':['अपॉइंटमेंट','डॉक्टर भेटी'],'Emotional support':['भावनात्मक सहारा','भावनिक आधार'],
+'Profile':['प्रोफ़ाइल','प्रोफाइल'],'Preferred name':['पसंदीदा नाम','पसंतीचे नाव'],'Care stage':['देखभाल का चरण','काळजीचा टप्पा'],'Just discharged':['अभी छुट्टी मिली','नुकताच डिस्चार्ज'],'First weeks':['पहले सप्ताह','पहिले आठवडे'],'Follow-up stage':['फॉलो-अप चरण','पाठपुरावा टप्पा'],'Ongoing':['जारी','सुरू'],'Baby nickname':['शिशु का प्यार का नाम','बाळाचे लाडाचे नाव'],'Save preferences':['पसंद सहेजें','पसंती जतन करा'],'Privacy:':['गोपनीयता:','गोपनीयता:'],
+'AarogyaMaa is a frontend prototype. Information entered into trackers and preferences is stored locally in this browser. Avoid entering highly sensitive medical or personal information.':['AarogyaMaa एक फ्रंटएंड प्रोटोटाइप है। ट्रैकर और पसंद में दर्ज जानकारी इस ब्राउज़र में ही सहेजी जाती है। अत्यंत संवेदनशील चिकित्सीय या व्यक्तिगत जानकारी दर्ज न करें।','AarogyaMaa हा फ्रंटएंड प्रोटोटाइप आहे. ट्रॅकर आणि पसंतीमध्ये भरलेली माहिती याच ब्राउझरमध्ये साठवली जाते. अतिसंवेदनशील वैद्यकीय किंवा वैयक्तिक माहिती भरू नका.'],
+'Delete My Data':['मेरा डेटा हटाएँ','माझा डेटा हटवा'],'Delete all AarogyaMaa data stored in this browser?':['इस ब्राउज़र में सहेजा गया AarogyaMaa का सारा डेटा हटाएँ?','या ब्राउझरमध्ये जतन केलेला AarogyaMaa चा सर्व डेटा हटवायचा?'],'Your data was deleted':['आपका डेटा हटा दिया गया','तुमचा डेटा हटवला गेला'],'Preferences saved':['पसंद सहेजी गई','पसंती जतन केल्या'],'Welcome back, {n}.':['फिर स्वागत है, {n}।','पुन्हा स्वागत, {n}.'],
+'FAQ':['अक्सर पूछे जाने वाले प्रश्न','वारंवार विचारले जाणारे प्रश्न'],'What is AarogyaMaa?':['AarogyaMaa क्या है?','AarogyaMaa म्हणजे काय?'],'Does AarogyaMaa replace a doctor?':['क्या AarogyaMaa डॉक्टर का विकल्प है?','AarogyaMaa डॉक्टरांची जागा घेते का?'],'Is my information stored?':['क्या मेरी जानकारी सहेजी जाती है?','माझी माहिती साठवली जाते का?'],'Can I use the period tracker?':['क्या मैं पीरियड ट्रैकर उपयोग कर सकती हूँ?','मी मासिक पाळी ट्रॅकर वापरू शकते का?'],'Can I track newborn care?':['क्या मैं नवजात की देखभाल ट्रैक कर सकती हूँ?','मी नवजात बाळाची काळजी नोंदवू शकते का?'],'How do reminders work?':['रिमाइंडर कैसे काम करते हैं?','स्मरणपत्रे कशी काम करतात?'],'Can I delete my data?':['क्या मैं अपना डेटा हटा सकती हूँ?','मी माझा डेटा हटवू शकते का?'],'When should I contact a healthcare professional?':['स्वास्थ्य पेशेवर से कब संपर्क करना चाहिए?','आरोग्य तज्ज्ञांशी केव्हा संपर्क साधावा?'],
+'A calm companion for organizing care and learning after hospital discharge.':['अस्पताल से छुट्टी के बाद देखभाल को व्यवस्थित करने और सीखने का शांत साथी।','रुग्णालयातून डिस्चार्जनंतर काळजीचे नियोजन आणि शिकण्यासाठी एक शांत साथी.'],'No. It offers general education and organization, not diagnosis or treatment.':['नहीं। यह सामान्य जानकारी और व्यवस्था देता है, निदान या उपचार नहीं।','नाही. हे सामान्य माहिती आणि नियोजन देते, निदान किंवा उपचार नाही.'],'Only in this browser, through localStorage. Nothing is sent anywhere.':['केवल इसी ब्राउज़र में, localStorage के ज़रिए। कुछ भी कहीं नहीं भेजा जाता।','फक्त याच ब्राउझरमध्ये, localStorage द्वारे. काहीही कुठेही पाठवले जात नाही.'],'Yes. It gives estimates only and is not medically certain.':['हाँ। यह केवल अनुमान देता है और चिकित्सीय रूप से निश्चित नहीं है।','होय. हे फक्त अंदाज देते आणि वैद्यकीयदृष्ट्या निश्चित नाही.'],'Yes, with the checklist, reminders and vaccination tracker.':['हाँ, चेकलिस्ट, रिमाइंडर और टीकाकरण ट्रैकर से।','होय, चेकलिस्ट, स्मरणपत्रे आणि लसीकरण ट्रॅकरद्वारे.'],'You add them and see them here. They do not send alerts.':['आप उन्हें जोड़ते हैं और यहीं देखते हैं। वे अलर्ट नहीं भेजते।','तुम्ही ती जोडता आणि येथे पाहता. ती सूचना पाठवत नाहीत.'],'Yes, use Delete My Data in Profile.':['हाँ, प्रोफ़ाइल में "मेरा डेटा हटाएँ" दबाएँ।','होय, प्रोफाइलमध्ये "माझा डेटा हटवा" वापरा.'],'Any time you are worried. See Warning Signs for examples.':['जब भी आप चिंतित हों। उदाहरणों के लिए चेतावनी के संकेत देखें।','जेव्हा केव्हा काळजी वाटेल. उदाहरणांसाठी धोक्याची चिन्हे पहा.'],
+'AarogyaMaa provides general educational and organizational support. It does not diagnose, treat, or replace advice from qualified healthcare professionals. For urgent concerns, seek appropriate medical care.':['AarogyaMaa सामान्य शैक्षिक और व्यवस्था संबंधी सहयोग देता है। यह निदान, उपचार या योग्य स्वास्थ्य पेशेवरों की सलाह का विकल्प नहीं है। आपात स्थिति में उचित चिकित्सा सहायता लें।','AarogyaMaa सामान्य शैक्षणिक आणि नियोजनासाठी मदत देते. हे निदान, उपचार करत नाही किंवा पात्र आरोग्य तज्ज्ञांच्या सल्ल्याला पर्याय नाही. तातडीच्या बाबतीत योग्य वैद्यकीय मदत घ्या.'],'Privacy: stored only in this browser':['गोपनीयता: केवल इसी ब्राउज़र में सहेजा जाता है','गोपनीयता: फक्त याच ब्राउझरमध्ये साठवले जाते'],
+'Menu':['मेनू','मेनू'],'Language':['भाषा','भाषा'],'Close':['बंद करें','बंद करा'],
+'Postpartum recovery':['प्रसवोत्तर स्वास्थ्य-लाभ','प्रसूतीनंतरची सुधारणा'],'Rest & self-care':['आराम और स्वयं की देखभाल','विश्रांती आणि स्वतःची काळजी'],'Breastfeeding support':['स्तनपान सहायता','स्तनपान मदत'],'Sleep':['नींद','झोप'],'Diaper & hygiene':['डायपर और स्वच्छता','डायपर आणि स्वच्छता'],'Cord care':['नाल की देखभाल','नाळेची काळजी'],'Bathing':['नहलाना','आंघोळ'],'Skin care':['त्वचा की देखभाल','त्वचेची काळजी'],'Safe sleep':['सुरक्षित नींद','सुरक्षित झोप'],
+'Do / Remember':['करें / याद रखें','करा / लक्षात ठेवा'],"Educational information only. Follow your clinician's advice.":['केवल शैक्षिक जानकारी। अपने चिकित्सक की सलाह मानें।','केवळ शैक्षणिक माहिती. तुमच्या डॉक्टरांचा सल्ला पाळा.'],
+'Hospital discharge':['अस्पताल से छुट्टी','रुग्णालयातून डिस्चार्ज'],'First days at home':['घर पर पहले दिन','घरातले पहिले दिवस'],"Mother's recovery":['माँ का स्वास्थ्य-लाभ','आईची सुधारणा'],'Newborn care':['नवजात देखभाल','नवजात बाळाची काळजी'],'Follow-up':['फॉलो-अप','पाठपुरावा'],'Ongoing well-being':['निरंतर स्वास्थ्य','सतत आरोग्य'],'Completed ✓':['पूर्ण ✓','पूर्ण ✓'],'Mark as completed':['पूर्ण चिह्नित करें','पूर्ण म्हणून नोंदवा'],'Your journey: {a} of {b} stages completed':['आपकी यात्रा: {b} में से {a} चरण पूर्ण','तुमचा प्रवास: {b} पैकी {a} टप्पे पूर्ण'],
+'Drink enough water':['पर्याप्त पानी पिएँ','पुरेसे पाणी प्या'],'Have a balanced meal':['संतुलित भोजन करें','संतुलित जेवण घ्या'],'Take prescribed medicines as directed':['बताई गई दवाएँ निर्देशानुसार लें','सांगितलेली औषधे निर्देशानुसार घ्या'],'Complete personal hygiene':['व्यक्तिगत स्वच्छता पूरी करें','वैयक्तिक स्वच्छता पूर्ण करा'],'Baby: feeding':['शिशु: दूध पिलाना','बाळ: दूध पाजणे'],'Baby: diaper/hygiene check':['शिशु: डायपर/स्वच्छता जाँच','बाळ: डायपर/स्वच्छता तपासणी'],'Baby: safe sleep routine':['शिशु: सुरक्षित नींद की दिनचर्या','बाळ: सुरक्षित झोपेची दिनचर्या'],'Baby: care check':['शिशु: देखभाल जाँच','बाळ: काळजी तपासणी'],'Today’s progress: {p}%':['आज की प्रगति: {p}%','आजची प्रगती: {p}%'],
+'Delete':['हटाएँ','हटवा'],'Edit':['संपादित करें','बदला'],'Toggle status':['स्थिति बदलें','स्थिती बदला'],'Undo':['पूर्ववत करें','परत करा'],'Mark done':['पूर्ण करें','पूर्ण करा'],'Nothing here yet. Add your first entry above.':['अभी कुछ नहीं। ऊपर पहली प्रविष्टि जोड़ें।','अजून काही नाही. वर पहिली नोंद जोडा.'],
+'Saved':['सहेजा गया','जतन केले'],'Deleted':['हटाया गया','हटवले'],'Editing – save to update':['संपादन जारी – अपडेट के लिए सहेजें','बदल सुरू – अद्ययावत करण्यासाठी जतन करा'],'Task added':['कार्य जोड़ा गया','काम जोडले'],'Today’s checklist reset':['आज की चेकलिस्ट रीसेट हुई','आजची चेकलिस्ट रीसेट केली'],'Duration must be shorter than the cycle.':['अवधि चक्र से छोटी होनी चाहिए।','कालावधी चक्रापेक्षा कमी असावा.'],'Saved. Showing estimates only.':['सहेजा गया। केवल अनुमान दिखाए गए हैं।','जतन केले. फक्त अंदाज दाखवले आहेत.'],'Could not save in this browser.':['इस ब्राउज़र में सहेजा नहीं जा सका।','या ब्राउझरमध्ये जतन करता आले नाही.']
+};
+const D2 = {
+'Gather discharge papers and medicine instructions; ask questions before leaving.':['डिस्चार्ज के कागज़ और दवाओं के निर्देश इकट्ठा करें; जाने से पहले सवाल पूछ लें।','डिस्चार्जची कागदपत्रे आणि औषधांच्या सूचना जमा करा; निघण्यापूर्वी प्रश्न विचारा.'],
+'Set up a rest corner, keep water and snacks close, and accept help.':['आराम का कोना बनाएँ, पानी और नाश्ता पास रखें, और मदद स्वीकार करें।','विश्रांतीसाठी कोपरा तयार करा, पाणी व खाऊ जवळ ठेवा, आणि मदत स्वीकारा.'],
+'Rest, eat regularly, and note how you feel each day.':['आराम करें, नियमित खाएँ, और रोज़ अपनी स्थिति नोट करें।','विश्रांती घ्या, नियमित खा, आणि रोज कसे वाटते ते नोंदवा.'],
+'Learn baby’s feeding and sleep rhythm, and keep safe sleep habits.':['शिशु के दूध पीने और सोने की लय समझें, और सुरक्षित नींद की आदतें रखें।','बाळाच्या दूध पिण्याची व झोपेची लय समजून घ्या, आणि सुरक्षित झोपेच्या सवयी ठेवा.'],
+'Attend check-ups and vaccinations for you and baby.':['अपने और शिशु के चेक-अप व टीकाकरण करवाएँ।','तुमच्या व बाळाच्या तपासण्या आणि लसीकरण करून घ्या.'],
+'Keep asking for support and care for your emotional health.':['सहारा माँगते रहें और अपनी भावनात्मक सेहत का ध्यान रखें।','आधार मागत राहा आणि तुमच्या भावनिक आरोग्याची काळजी घ्या.'],
+'Cook simple, nourishing food and keep water within reach.':['सादा, पौष्टिक खाना बनाएँ और पानी पहुँच में रखें।','साधे, पौष्टिक जेवण बनवा आणि पाणी हाताशी ठेवा.'],
+'Protect naps. Take the baby for a stretch so she can sleep.':['झपकियों की रक्षा करें। कुछ देर शिशु को संभालें ताकि वह सो सके।','डुलक्या जपा. थोडा वेळ बाळाला सांभाळा म्हणजे आईला झोप घेता येईल.'],
+'Handle diapers, burping and settling between feeds.':['डायपर, डकार और शिशु को शांत करने का काम सँभालें।','डायपर, ढेकर काढणे आणि बाळाला शांत करणे सांभाळा.'],
+'Laundry, dishes and visitors are theirs to manage.':['कपड़े, बर्तन और मेहमानों की ज़िम्मेदारी उनकी हो।','कपडे, भांडी आणि पाहुण्यांची जबाबदारी त्यांची असावी.'],
+'Keep track of visits and vaccinations, and go along.':['डॉक्टर के दौरे और टीकाकरण याद रखें, और साथ जाएँ।','डॉक्टर भेटी व लसीकरणाची नोंद ठेवा आणि सोबत जा.'],
+'Listen without fixing. Notice if low mood lingers and encourage help.':['सुझाव देने के बजाय सुनें। उदासी बनी रहे तो ध्यान दें और मदद लेने को प्रेरित करें।','उपाय न सांगता ऐका. उदासी टिकली तर लक्षात घ्या आणि मदत घेण्यास प्रोत्साहन द्या.'],
+'Recovery takes weeks, and every body heals at its own pace.':['स्वास्थ्य-लाभ में हफ़्ते लगते हैं, और हर शरीर अपनी गति से ठीक होता है।','बरे होण्यास आठवडे लागतात, आणि प्रत्येक शरीर स्वतःच्या गतीने बरे होते.'],
+'Regular, varied meals help you heal and support feeding.':['नियमित और विविध भोजन ठीक होने और स्तनपान में मदद करते हैं।','नियमित आणि विविध जेवण बरे होण्यास व स्तनपानास मदत करते.'],
+'Small routines protect your energy.':['छोटी दिनचर्याएँ आपकी ऊर्जा बचाती हैं।','छोट्या दिनक्रमांमुळे तुमची ऊर्जा टिकते.'],
+'Feeding is a skill learned by both of you.':['स्तनपान एक कौशल है जो आप दोनों सीखते हैं।','स्तनपान हे दोघांनी मिळून शिकायचे कौशल्य आहे.'],
+'Newborns feed often. Watch for cues like rooting and hand-to-mouth.':['नवजात बार-बार दूध पीते हैं। मुँह खोलने और हाथ मुँह में डालने जैसे संकेत देखें।','नवजात बाळे वारंवार दूध पितात. तोंड फिरवणे, हात तोंडात घालणे असे संकेत पाहा.'],
+'Newborn sleep is short and irregular, and that is normal.':['नवजात की नींद छोटी और अनियमित होती है, और यह सामान्य है।','नवजात बाळाची झोप लहान आणि अनियमित असते, आणि हे सामान्य आहे.'],
+'Frequent changes keep skin comfortable.':['बार-बार बदलने से त्वचा आरामदायक रहती है।','वारंवार बदलल्याने त्वचा आरामदायी राहते.'],
+'The cord stump dries and falls off on its own.':['नाल का हिस्सा सूखकर अपने आप गिर जाता है।','नाळेचा भाग सुकून आपोआप गळून पडतो.'],
+'Sponge baths are common until the cord heals.':['नाल भरने तक स्पंज से पोंछकर नहलाना आम है।','नाळ बरी होईपर्यंत स्पंजने अंग पुसणे सामान्य आहे.'],
+'Newborn skin is delicate.':['नवजात की त्वचा नाज़ुक होती है।','नवजात बाळाची त्वचा नाजूक असते.'],
+'A safe sleep space lowers risks.':['सुरक्षित नींद की जगह जोखिम घटाती है।','सुरक्षित झोपेची जागा धोका कमी करते.'],
+'Timely visits let professionals check growth and protect health.':['समय पर जाँच से विशेषज्ञ विकास देख पाते हैं और स्वास्थ्य की रक्षा होती है।','वेळेवर तपासणीमुळे तज्ज्ञ वाढ पाहू शकतात आणि आरोग्य जपले जाते.'],
+'Rest whenever the baby sleeps':['शिशु के सोते ही आप भी आराम करें','बाळ झोपेल तेव्हा तुम्हीही विश्रांती घ्या'],
+'Keep hygiene gentle and follow your discharge advice':['स्वच्छता कोमलता से रखें और डिस्चार्ज की सलाह मानें','स्वच्छता सौम्यपणे ठेवा आणि डिस्चार्जचा सल्ला पाळा'],
+'Move slowly; ask for help lifting and carrying':['धीरे चलें; उठाने-ढोने में मदद माँगें','हळू हालचाल करा; उचलण्यासाठी मदत मागा'],
+'Share how you feel with someone you trust':['अपनी भावनाएँ किसी भरोसेमंद से साझा करें','तुम्हाला कसे वाटते ते विश्वासू व्यक्तीला सांगा'],
+'Include protein, vegetables, fruit and whole grains':['प्रोटीन, सब्ज़ियाँ, फल और साबुत अनाज शामिल करें','प्रथिने, भाज्या, फळे आणि पूर्ण धान्ये खा'],
+'Iron-rich foods such as lentils, greens and jaggery may help; ask your clinician about supplements':['दाल, हरी सब्ज़ियाँ और गुड़ जैसे आयरन-समृद्ध खाद्य मदद कर सकते हैं; सप्लीमेंट के बारे में डॉक्टर से पूछें','डाळी, पालेभाज्या आणि गूळ अशा लोहयुक्त पदार्थांची मदत होऊ शकते; सप्लिमेंटबद्दल डॉक्टरांना विचारा'],
+'Sip water through the day':['दिन भर थोड़ा-थोड़ा पानी पिएँ','दिवसभर थोडे थोडे पाणी प्या'],
+'Keep easy snacks near your feeding spot':['स्तनपान की जगह के पास हल्का नाश्ता रखें','दूध पाजण्याच्या जागेजवळ सोपा खाऊ ठेवा'],
+'Accept help with chores':['घर के कामों में मदद स्वीकार करें','घरकामात मदत स्वीकारा'],
+'Take short breaks, even ten minutes':['छोटे ब्रेक लें, दस मिनट ही सही','लहान विश्रांती घ्या, दहा मिनिटे का असेना'],
+'Keep a calm wind-down before sleep':['सोने से पहले शांत माहौल रखें','झोपण्यापूर्वी शांत वातावरण ठेवा'],
+'Say yes when visitors offer to cook':['मेहमान खाना बनाने की पेशकश करें तो हाँ कहें','पाहुण्यांनी स्वयंपाकाची मदत देऊ केली तर हो म्हणा'],
+'Newborns often feed many times a day; follow hunger cues':['नवजात दिन में कई बार दूध पीते हैं; भूख के संकेत देखें','नवजात बाळे दिवसातून अनेकदा दूध पितात; भुकेचे संकेत पाहा'],
+'Try comfortable positions with back and arm support':['पीठ और बाँह के सहारे के साथ आरामदायक स्थिति आज़माएँ','पाठ व हाताला आधार देऊन आरामदायी स्थिती वापरून पाहा'],
+'Stay hydrated and eat regularly':['पानी पिएँ और नियमित खाएँ','पुरेसे पाणी प्या आणि नियमित खा'],
+'Ask a lactation professional or doctor if feeding hurts or worries you':['दूध पिलाने में दर्द या चिंता हो तो स्तनपान विशेषज्ञ या डॉक्टर से पूछें','दूध पाजताना वेदना किंवा काळजी वाटल्यास स्तनपान तज्ज्ञ किंवा डॉक्टरांना विचारा'],
+'Feed on cues, not only by the clock':['केवल घड़ी देखकर नहीं, संकेत देखकर दूध पिलाएँ','फक्त घड्याळ पाहून नव्हे, संकेत पाहून दूध पाजा'],
+'Burp gently after feeds':['दूध के बाद धीरे से डकार दिलाएँ','दूध पाजल्यानंतर हळूच ढेकर काढा'],
+'Note wet and dirty diapers and share concerns with your pediatrician':['गीले और गंदे डायपर नोट करें और चिंता हो तो बाल रोग विशेषज्ञ को बताएँ','ओले व मळलेले डायपर नोंदवा आणि काळजी असल्यास बालरोगतज्ज्ञांना सांगा'],
+'Follow day and night cues: light and noise by day, calm at night':['दिन-रात का फ़र्क़ सिखाएँ: दिन में रोशनी और आवाज़, रात में शांति','दिवस-रात्रीचा फरक शिकवा: दिवसा प्रकाश व आवाज, रात्री शांतता'],
+'Sleep when baby sleeps':['शिशु सोए तब आप भी सोएँ','बाळ झोपेल तेव्हा तुम्हीही झोपा'],
+'Swaddle only as your clinician advises':['कपड़े में लपेटना केवल डॉक्टर की सलाह अनुसार करें','बाळाला गुंडाळणे फक्त डॉक्टरांच्या सल्ल्यानुसार करा'],
+'Wash hands before handling baby':['शिशु को छूने से पहले हाथ धोएँ','बाळाला हाताळण्यापूर्वी हात धुवा'],
+'Clean gently front to back':['आगे से पीछे की ओर धीरे से साफ़ करें','पुढून मागे अशा दिशेने हळुवार स्वच्छ करा'],
+'Change diapers soon after they are wet or soiled':['गीला या गंदा होते ही डायपर बदलें','ओले किंवा मळलेले होताच डायपर बदला'],
+'Keep it clean and dry as your clinician advised':['डॉक्टर की सलाह अनुसार इसे साफ़ और सूखा रखें','डॉक्टरांच्या सल्ल्यानुसार ते स्वच्छ व कोरडे ठेवा'],
+'Fold diapers below the stump':['डायपर को नाल के नीचे मोड़ें','डायपर नाळेच्या खाली दुमडा'],
+'Do not pull it off':['इसे खींचकर न निकालें','ते ओढून काढू नका'],
+'Keep the room warm':['कमरा गर्म रखें','खोली उबदार ठेवा'],
+'Never leave baby alone in water':['शिशु को पानी में अकेला कभी न छोड़ें','बाळाला पाण्यात कधीही एकटे सोडू नका'],
+'Test water temperature with your wrist':['पानी का तापमान कलाई से जाँचें','पाण्याचे तापमान मनगटाने तपासा'],
+'Use mild, fragrance-free products':['हल्के, बिना खुशबू वाले उत्पाद इस्तेमाल करें','सौम्य, सुगंधविरहित उत्पादने वापरा'],
+'Dress baby in soft, breathable clothes':['शिशु को मुलायम, हवादार कपड़े पहनाएँ','बाळाला मऊ, हवा खेळती राहील असे कपडे घाला'],
+'Ask your doctor about rashes rather than guessing':['चकत्तों के बारे में अंदाज़ा न लगाएँ, डॉक्टर से पूछें','पुरळांबद्दल अंदाज न लावता डॉक्टरांना विचारा'],
+'Place baby on the back on a firm, flat surface':['शिशु को सख़्त, समतल सतह पर पीठ के बल सुलाएँ','बाळाला टणक, सपाट पृष्ठभागावर पाठीवर झोपवा'],
+'Keep the sleep space free of pillows, loose blankets and toys':['सोने की जगह पर तकिए, ढीले कंबल और खिलौने न रखें','झोपण्याच्या जागेत उशा, सैल पांघरुणे व खेळणी ठेवू नका'],
+'Avoid overheating':['ज़्यादा गर्मी से बचाएँ','जास्त गरम होऊ देऊ नका'],
+'Keep the vaccination card safe':['टीकाकरण कार्ड सुरक्षित रखें','लसीकरण कार्ड सुरक्षित ठेवा'],
+'Confirm the schedule with your pediatrician and local guidance':['समय-सारणी बाल रोग विशेषज्ञ और स्थानीय दिशानिर्देशों से पक्की करें','वेळापत्रक बालरोगतज्ज्ञ व स्थानिक मार्गदर्शनानुसार निश्चित करा'],
+'Record dates in the tracker below':['तारीख़ें नीचे ट्रैकर में दर्ज करें','तारखा खालील ट्रॅकरमध्ये नोंदवा'],
+'Easing into your first week':['पहले हफ़्ते में धीरे-धीरे ढलना','पहिल्या आठवड्यात हळूहळू रुळणे'],
+'Plan simple days: one meal, one rest, one small task. Keep discharge notes where family can find them.':['दिन सरल रखें: एक भोजन, एक आराम, एक छोटा काम। डिस्चार्ज के कागज़ ऐसी जगह रखें जहाँ परिवार को मिल जाएँ।','दिवस साधे ठेवा: एक जेवण, एक विश्रांती, एक लहान काम. डिस्चार्जची कागदपत्रे कुटुंबाला सापडतील अशी ठेवा.'],
+'Eating well while recovering':['स्वास्थ्य-लाभ के दौरान अच्छा खान-पान','बरे होताना चांगला आहार'],
+'Regular meals with protein, vegetables, fruit and grains can help energy. Ask your clinician about iron or vitamin supplements.':['प्रोटीन, सब्ज़ी, फल और अनाज वाला नियमित भोजन ऊर्जा देता है। आयरन या विटामिन सप्लीमेंट के बारे में डॉक्टर से पूछें।','प्रथिने, भाज्या, फळे व धान्य असलेले नियमित जेवण ऊर्जा देते. लोह किंवा जीवनसत्त्वाच्या सप्लिमेंटबद्दल डॉक्टरांना विचारा.'],
+'Finding a comfortable position':['आरामदायक स्थिति ढूँढना','आरामदायी स्थिती शोधणे'],
+'Support your back and arms, bring baby to the breast, and check that baby’s body faces you. Seek professional help for pain or worries.':['पीठ और बाँहों को सहारा दें, शिशु को स्तन के पास लाएँ, और देखें कि उसका शरीर आपकी ओर हो। दर्द या चिंता हो तो विशेषज्ञ की मदद लें।','पाठ व हातांना आधार द्या, बाळाला स्तनाजवळ आणा, आणि त्याचे शरीर तुमच्याकडे वळलेले आहे ते पाहा. वेदना किंवा काळजी असल्यास तज्ज्ञांची मदत घ्या.'],
+'Understanding newborn sleep':['नवजात की नींद को समझना','नवजात बाळाची झोप समजून घेणे'],
+'Newborns wake often to feed. Sleep patterns mature over months, so short stretches are expected.':['नवजात दूध पीने के लिए अक्सर जागते हैं। नींद का ढर्रा महीनों में बनता है, इसलिए छोटी नींद सामान्य है।','नवजात बाळे दूध पिण्यासाठी वारंवार जागी होतात. झोपेची सवय महिन्यांत तयार होते, म्हणून लहान झोप अपेक्षित आहे.'],
+'Gentle movement after birth':['प्रसव के बाद हल्की गतिविधि','प्रसूतीनंतर हलकी हालचाल'],
+'Short, slow walks may suit many mothers, but ask your care team when it’s right for you.':['छोटी, धीमी सैर कई माँओं के लिए ठीक हो सकती है, पर आपके लिए कब सही है यह अपनी देखभाल टीम से पूछें।','लहान, हळू फेरफटका अनेक मातांना योग्य असू शकतो, पण तुमच्यासाठी केव्हा योग्य आहे ते काळजी टीमला विचारा.'],
+'Hand-washing and clean routines':['हाथ धोना और स्वच्छ दिनचर्या','हात धुणे आणि स्वच्छ दिनक्रम'],
+'Wash hands before feeding and diaper changes. Keep feeding items clean.':['दूध पिलाने और डायपर बदलने से पहले हाथ धोएँ। दूध पिलाने की चीज़ें साफ़ रखें।','दूध पाजण्यापूर्वी व डायपर बदलण्यापूर्वी हात धुवा. दूध पाजण्याची साधने स्वच्छ ठेवा.'],
+'Baby blues and asking for help':['बेबी ब्लूज़ और मदद माँगना','बेबी ब्लूज आणि मदत मागणे'],
+'Mood swings are common early on. If sadness or worry lasts, or feels heavy, talk to a healthcare professional soon.':['शुरू में मूड बदलना आम है। उदासी या चिंता बनी रहे या भारी लगे तो जल्द स्वास्थ्य पेशेवर से बात करें।','सुरुवातीला मूड बदलणे सामान्य आहे. उदासी किंवा काळजी टिकली किंवा जड वाटली तर लवकर आरोग्य तज्ज्ञांशी बोला.'],
+'Preparing for check-ups':['चेक-अप की तैयारी','तपासणीची तयारी'],
+'Write questions down, bring the vaccination card, and note feeding and diaper patterns.':['सवाल लिख लें, टीकाकरण कार्ड साथ लाएँ, और दूध व डायपर की आदतें नोट करें।','प्रश्न लिहून ठेवा, लसीकरण कार्ड सोबत आणा, आणि दूध व डायपरच्या सवयी नोंदवा.']
+};
+Object.assign(D, D2);
+/* Translation dictionary. Keys are the English source text; en returns them unchanged. */
+const translations = { en: {}, hi: {}, mr: {} };
+for (const k in D) { translations.en[k] = k; translations.hi[k] = D[k][0]; translations.mr[k] = D[k][1]; }
+let currentLanguage = localStorage.getItem('language') || 'en';
+const LOC = { en: 'en-IN', hi: 'hi-IN', mr: 'mr-IN' };
+function t(k, v) { let s = (translations[currentLanguage] || {})[k] ?? k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+const T = s => `<span data-en="${esc(s)}">${esc(t(s))}</span>`; /* re-translated in place on language change */
+const fdate = (d, o = { dateStyle: 'medium' }) => { try { return new Intl.DateTimeFormat(LOC[currentLanguage], o).format(typeof d === 'string' ? new Date(d + 'T00:00') : d); } catch { return d; } };
+const drawAll = [];
+const DYN = '#quick,#jlist,#mgrid,#bgrid,#clist,#schips,#slist,#qfields,#rlist,#vlist,#cats,#agrid,#wm,#wb,#faqs,#cal,#mbody,#hello,#jprog,#cpct,#pout,#qlast,#toast,script,style';
+let stat = null;
+function refreshDynamicContent() { renderJourney(); renderChecklist(); renderPeriod(); showCheckin(); renderArts(); hello(); drawAll.forEach(d => d()); }
+function applyLanguage(l) {
+  if (!stat) { /* remember every static text node / placeholder once */
+    stat = []; const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) { const s = n.nodeValue.trim(); if (s && !n.parentElement.closest(DYN + ',[data-en]')) stat.push([n, s, n.nodeValue.match(/^\s*/)[0], n.nodeValue.match(/\s*$/)[0]]); }
+    $$('[placeholder],[aria-label]').forEach(e => ['placeholder', 'aria-label'].forEach(a => e.hasAttribute(a) && stat.push([e, e.getAttribute(a), a])));
+  }
+  currentLanguage = translations[l] ? l : 'en'; localStorage.setItem('language', currentLanguage);
+  document.documentElement.lang = currentLanguage; $('#lang').value = currentLanguage;
+  stat.forEach(x => x.length === 4 ? x[0].nodeValue = x[2] + t(x[1]) + x[3] : x[0].setAttribute(x[2], t(x[1])));
+  $$('[data-en]').forEach(e => e.textContent = t(e.dataset.en));
+  if ($('#modal').open) $('#modal').close();
+  refreshDynamicContent();
+}
+
+/* ---------- Nav, language, active link ---------- */
+$('#burger').onclick = () => { const o = $('#menu').classList.toggle('open'); $('#burger').setAttribute('aria-expanded', o); };
+$$('#menu a').forEach(a => a.addEventListener('click', () => $('#menu').classList.remove('open')));
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) $$('#menu a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-40% 0px -55% 0px' });
+$$('main section[id]').forEach(s => io.observe(s));
+$('#lang').onchange = e => applyLanguage(e.target.value);
+
+/* ---------- Quick actions, care cards ---------- */
+$('#quick').innerHTML = [['🌿', 'Mother Care', 'mother'], ['🍼', 'Baby Care', 'baby'], ['✅', "Today's Checklist", 'checklist'], ['💛', 'My Health', 'health'], ['⏰', 'Reminders', 'reminders'], ['⚠️', 'Warning Signs', 'warning']]
+  .map(([i, s, id]) => `<a class="tile" href="#${id}" style="text-decoration:none;color:inherit"><span aria-hidden="true">${i}</span>${T(s)}</a>`).join('');
+['mother', 'baby'].forEach(k => {
+  $('#' + k.charAt(0) + 'grid').innerHTML = care[k].map((c, i) => `<button class="tile" data-k="${k}" data-i="${i}"><h3>${T(c[0])}</h3><p>${T(c[1])}</p></button>`).join('');
+});
+$$('button.tile[data-k]').forEach(b => b.onclick = () => { const c = care[b.dataset.k][b.dataset.i]; modal(`<h3>${t(c[0])}</h3><p>${t(c[1])}</p><p><strong>${t('Do / Remember')}</strong></p><ul>${c[2].map(x => `<li>${t(x)}</li>`).join('')}</ul><p class="small">${t("Educational information only. Follow your clinician's advice.")}</p>`); });
+
+/* ---------- Journey ---------- */
+function renderJourney() {
+  const d = get('journey', []);
+  $('#jlist').innerHTML = stages.map((s, i) => `<li class="${d.includes(i) ? 'done' : ''}"><h3>${t(s[0])}</h3><p>${t(s[1])}</p><button class="btn ghost" data-j="${i}" aria-pressed="${d.includes(i)}">${t(d.includes(i) ? 'Completed ✓' : 'Mark as completed')}</button></li>`).join('');
+  $('#jprog').textContent = t('Your journey: {a} of {b} stages completed', { a: d.length, b: stages.length });
+}
+$('#jlist').onclick = e => { const b = e.target.closest('[data-j]'); if (!b) return; let d = get('journey', []); const i = +b.dataset.j; d = d.includes(i) ? d.filter(x => x !== i) : [...d, i]; set('journey', d); renderJourney(); };
+
+/* ---------- Checklist ---------- */
+const baseTasks = ['Drink enough water', 'Have a balanced meal', 'Take prescribed medicines as directed', 'Rest', 'Complete personal hygiene', 'Baby: feeding', 'Baby: diaper/hygiene check', 'Baby: safe sleep routine', 'Baby: care check'];
+function renderChecklist() {
+  let s = get('check', {}); if (s.date !== today()) s = { date: today(), done: [], custom: s.custom || [] };
+  const all = [...baseTasks, ...s.custom];
+  $('#clist').innerHTML = all.map((k, i) => `<li><input type="checkbox" id="c${i}" data-c="${esc(k)}" ${s.done.includes(k) ? 'checked' : ''}><label for="c${i}" class="grow-s">${esc(i < baseTasks.length ? t(k) : k)}</label>${i >= baseTasks.length ? `<button data-d="${i - baseTasks.length}" aria-label="${t('Delete')}">${t('Delete')}</button>` : ''}</li>`).join('');
+  const n = all.filter(k => s.done.includes(k)).length, p = Math.round(n / all.length * 100);
+  $('#cbar').style.width = p + '%'; $('#cpct').textContent = t('Today’s progress: {p}%', { p }); set('check', s);
+}
+$('#clist').onchange = e => { const s = get('check'); const t = e.target.dataset.c; s.done = e.target.checked ? [...s.done, t] : s.done.filter(x => x !== t); set('check', s); renderChecklist(); };
+$('#clist').onclick = e => { const i = e.target.dataset.d; if (i === undefined) return; const s = get('check'); s.custom.splice(+i, 1); set('check', s); renderChecklist(); };
+$('#cform').onsubmit = e => { e.preventDefault(); const t = e.target.t.value.trim(); if (!t) return; const s = get('check'); s.custom.push(t); set('check', s); e.target.reset(); renderChecklist(); toast('Task added'); };
+$('#creset').onclick = () => { const s = get('check'); s.done = []; set('check', s); renderChecklist(); toast('Today’s checklist reset'); };
+
+/* ---------- Generic add / edit / delete list ---------- */
+function crud(formId, listId, key, line, sorter) {
+  const f = $(formId), l = $(listId); let edit = null;
+  const draw = () => {
+    const a = get(key, []).map((x, i) => ({ ...x, i })).sort(sorter || ((a, b) => (b.date || '').localeCompare(a.date || '')));
+    l.innerHTML = a.length ? a.map(x => `<li class="${x.done || x.status === 'Completed' ? 'done' : ''}">${line(x)}<div><button data-a="tog" data-i="${x.i}">${x.status ? t('Toggle status') : x.done !== undefined ? (x.done ? t('Undo') : t('Mark done')) : ''}</button> <button data-a="edit" data-i="${x.i}">${t('Edit')}</button> <button data-a="del" data-i="${x.i}">${t('Delete')}</button></div></li>`).join('') : `<li class="m">${t('Nothing here yet. Add your first entry above.')}</li>`;
+    $$('[data-a="tog"]', l).forEach(b => { if (!b.textContent) b.remove(); });
+  };
+  f.onsubmit = e => {
+    e.preventDefault(); const fd = new FormData(f), o = Object.fromEntries(fd); if (f.querySelector('[name="sym"]')) o.sym = fd.getAll('sym');
+    const a = get(key, []); if (edit !== null) { o.done = a[edit].done; a[edit] = o; edit = null; } else { o.done = o.status ? undefined : false; a.push(o); }
+    set(key, a); f.reset(); draw(); toast('Saved');
+  };
+  l.onclick = e => {
+    const b = e.target.closest('[data-a]'); if (!b) return; const i = +b.dataset.i, a = get(key, []);
+    if (b.dataset.a === 'del') { a.splice(i, 1); set(key, a); draw(); toast('Deleted'); }
+    else if (b.dataset.a === 'tog') { if (a[i].status) a[i].status = a[i].status === 'Completed' ? 'Upcoming' : 'Completed'; else a[i].done = !a[i].done; set(key, a); draw(); }
+    else { edit = i; Object.entries(a[i]).forEach(([k, v]) => { const el = f.elements[k]; if (el && typeof v === 'string') el.value = v; }); f.scrollIntoView({ block: 'center' }); toast('Editing – save to update'); }
+  };
+  drawAll.push(draw); draw();
+}
+const syms = ['Cramps', 'Headache', 'Back pain', 'Fatigue', 'Mood changes', 'Bloating', 'Breast tenderness', 'Nausea'];
+$('#schips').innerHTML = syms.map(s => `<label><input type="checkbox" name="sym" value="${s}">${T(s)}</label>`).join('');
+$('#sform').elements.date.value = today();
+crud('#sform', '#slist', 'symptoms', x => `<strong>${fdate(x.date)}</strong> <span class="tag">${t('Flow')}: ${esc(t(x.flow))}</span><div class="m">${(x.sym || []).map(s => t(s)).join(', ') || t('No symptoms selected')}${x.note ? ' – ' + esc(x.note) : ''}</div>`);
+crud('#rform', '#rlist', 'reminders', x => `<span class="tag">${esc(t(x.cat))}</span> <span class="t"><strong>${esc(x.title)}</strong></span><div class="m">${fdate(x.date)} ${x.time || ''}${x.notes ? ' – ' + esc(x.notes) : ''}</div>`, (a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+crud('#vform', '#vlist', 'vaccines', x => `<span class="tag">${t(x.status)}</span> <strong>${esc(x.title)}</strong><div class="m">${fdate(x.date)}${x.notes ? ' – ' + esc(x.notes) : ''}</div>`, (a, b) => a.date.localeCompare(b.date));
+
+/* ---------- Period tracker (estimates only) ---------- */
+function renderPeriod() {
+  const d = get('period'); if (!d) { $('#pout').textContent = t('Enter your dates to see an estimate.'); return; } const f = $('#pform').elements; f.last.value = d.last; f.cycle.value = d.cycle; f.dur.value = d.dur;
+  const start = new Date(d.last + 'T00:00'), now = new Date(today() + 'T00:00'), day = Math.floor((now - start) / 864e5);
+  const cyc = +d.cycle, cd = ((day % cyc) + cyc) % cyc + 1, next = new Date(start.getTime() + (Math.floor(day / cyc) + 1) * cyc * 864e5);
+  $('#pout').textContent = day < 0 ? t('The last-period date is in the future. Please check it.') : t('Estimated: cycle day {c} · next period around {d}. Cycles vary, so treat this as an estimate.', { c: cd, d: fdate(next, { dateStyle: 'full' }) });
+  $('#cal').innerHTML = Array.from({ length: cyc }, (_, i) => `<b class="${i < +d.dur ? 'p' : ''} ${i + 1 === cd && day >= 0 ? 't' : ''}">${i + 1}</b>`).join('');
+}
+$('#pform').onsubmit = e => { e.preventDefault(); const d = Object.fromEntries(new FormData(e.target)); if (+d.dur > +d.cycle) return toast('Duration must be shorter than the cycle.'); set('period', d); renderPeriod(); toast('Saved. Showing estimates only.'); };
+
+/* ---------- Postpartum check-in ---------- */
+const qs = ['Energy', 'Rest', 'Appetite', 'Hydration', 'General comfort', 'Emotional well-being'], opts = ['Low', 'Okay', 'Good'];
+$('#qfields').innerHTML = qs.map(q => `<fieldset><legend>${T(q)}</legend><div class="chips">${opts.map(o => `<label><input type="radio" name="${q}" value="${o}" required>${T(o)}</label>`).join('')}</div></fieldset>`).join('');
+$('#qform').onsubmit = e => { e.preventDefault(); const h = get('checkins', {}); h[today()] = Object.fromEntries(new FormData(e.target)); set('checkins', h); showCheckin(); toast('Check-in saved'); };
+function showCheckin() { const h = get('checkins', {}), k = Object.keys(h).sort().pop(); $('#qlast').textContent = k ? t('Last check-in {d}: ', { d: fdate(k) }) + Object.entries(h[k]).map(([a, b]) => t(a) + ' ' + t(b)).join(', ') + t('. Low answers for a few days are worth mentioning to your care team.') : ''; }
+
+/* ---------- Knowledge hub ---------- */
+let cat = 'All';
+const cats = ['All', ...new Set(arts.map(a => a[0]))];
+$('#cats').innerHTML = cats.map(c => `<button data-c="${c}" class="${c === 'All' ? 'on' : ''}">${T(c)}</button>`).join('');
+function renderArts() {
+  const q = $('#q').value.toLowerCase();
+  const r = arts.filter(a => (cat === 'All' || a[0] === cat) && (a.map(x => t(x)).join(' ').toLowerCase().includes(q)));
+  $('#agrid').innerHTML = r.length ? r.map(a => `<article class="card"><p class="small">${t(a[0])}</p><h3>${t(a[1])}</h3><p>${t(a[2]).slice(0, 70)}…</p><button class="btn ghost" data-r="${arts.indexOf(a)}">${t('Read more')}</button></article>`).join('') : `<p>${t('No articles match. Try another word or choose All.')}</p>`;
+}
+$('#cats').onclick = e => { const b = e.target.closest('button'); if (!b) return; cat = b.dataset.c; $$('#cats button').forEach(x => x.classList.toggle('on', x === b)); renderArts(); };
+$('#q').oninput = renderArts;
+$('#agrid').onclick = e => { const b = e.target.closest('[data-r]'); if (!b) return; const a = arts[b.dataset.r]; modal(`<p class="small">${t(a[0])}</p><h3>${t(a[1])}</h3><p>${t(a[2])}</p><p class="small">${t('General education, not medical advice.')}</p>`); };
+
+/* ---------- Warning, FAQ, profile ---------- */
+$('#wm').innerHTML = wm.map(x => `<li>${T(x)}</li>`).join(''); $('#wb').innerHTML = wb.map(x => `<li>${T(x)}</li>`).join('');
+$('#sos').onclick = () => modal(`<h3>${t('Get help now')}</h3><p>${t('Call your local emergency number or go to the nearest hospital. Stay with the person, and ask someone nearby to help.')}</p><p class="small">${t('AarogyaMaa cannot assess emergencies. Emergency numbers differ by country, so use the one for your area.')}</p>`);
+$('#faqs').innerHTML = faqs.map(f => `<details><summary>${T(f[0])}</summary><p>${T(f[1])}</p></details>`).join('');
+function hello() { const p = get('profile', {}); $('#hello').textContent = p.name ? t('Welcome back, {n}.', { n: p.name + (p.baby ? ' – ' + p.baby : '') }) : ''; Object.entries(p).forEach(([k, v]) => { const el = $('#fform').elements[k]; if (el) el.value = v; }); }
+$('#fform').onsubmit = e => { e.preventDefault(); set('profile', Object.fromEntries(new FormData(e.target))); hello(); toast('Preferences saved'); };
+$('#wipe').onclick = () => { if (confirm(t('Delete all AarogyaMaa data stored in this browser?'))) { Object.keys(localStorage).filter(k => k.startsWith(P)).forEach(k => localStorage.removeItem(k)); toast('Your data was deleted'); setTimeout(() => location.reload(), 900); } };
+
+/* ---------- Init ---------- */
+applyLanguage(currentLanguage);
+</script>
+</body>
+</html>
